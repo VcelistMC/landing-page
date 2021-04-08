@@ -18,36 +18,59 @@
  * 
 */
 const sectionList = document.getElementsByTagName('section');
-var unorderedList = document.createElement('ul');
+var navbar = document.createElement('ul');
+const numberOfSections = sectionList.length;
 
 /**
  * End Global Variables
  * Start Helper Functions
  * 
 */
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+    );
+}
 
+function findActiveElement(){
+    for(let i = 0; i < numberOfSections; i++){
+        const currElement = sectionList[i];
+        if(isInViewport(currElement) && currElement.className !== "your-active-class"){
+            currElement.className = "your-active-class";
+            break;
+        }
+        else
+            currElement.classList.remove('your-active-class');
+    }
+}
 
-
-
+function scrollTO(elementName){
+    navbar.addEventListener('click', function(event){
+        const clickedItem = document.querySelector(`[data-nav = "${event.target.textContent}"]`);
+        clickedItem.scrollIntoView({behavior: "smooth"});
+    })
+}
 /**
  * End Helper Functions
  * Begin Main Functions
  * 
 */
 function main() {
-    unorderedList.setAttribute('id', 'navbar__list');
+    navbar.setAttribute('id', 'navbar__list');
 
     const navEle = document.querySelector('nav');
 
-    for(let i = 0; i < sectionList.length; i++){
+    for(let i = 0; i < numberOfSections; i++){
         const item = sectionList[i];
         var listItem = document.createElement('li');
         listItem.className = 'menu__link';
         listItem.textContent = item.getAttribute('data-nav');
 
-        unorderedList.appendChild(listItem);
+        navbar.appendChild(listItem);
     }
-    navEle.appendChild(unorderedList);
+    navEle.appendChild(navbar);
 };
 
 // build the nav
@@ -66,8 +89,9 @@ function main() {
 */
 
 // Build menu 
-
-// Scroll to section on link click
-
-// Set sections as active
 window.addEventListener('load', main);
+// Scroll to section on link click
+scrollTO();
+// Set sections as active
+
+window.addEventListener('scroll', findActiveElement);
