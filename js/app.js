@@ -17,7 +17,8 @@
  * Define Global Variables
  * 
 */
-
+const sectionList = document.getElementsByTagName('section');
+var unorderedList = document.createElement('ul');
 
 /**
  * End Global Variables
@@ -27,11 +28,27 @@
 
 
 
+
 /**
  * End Helper Functions
  * Begin Main Functions
  * 
 */
+function main() {
+    unorderedList.setAttribute('id', 'navbar__list');
+
+    const navEle = document.querySelector('nav');
+
+    for(let i = 0; i < sectionList.length; i++){
+        const item = sectionList[i];
+        var listItem = document.createElement('li');
+        listItem.className = 'menu__link';
+        listItem.textContent = item.getAttribute('data-nav');
+
+        unorderedList.appendChild(listItem);
+    }
+    navEle.appendChild(unorderedList);
+};
 
 // build the nav
 
@@ -53,5 +70,4 @@
 // Scroll to section on link click
 
 // Set sections as active
-
-
+window.addEventListener('load', main);
