@@ -35,15 +35,16 @@ function isInViewport(element) {
 }
 
 function findActiveElement(){
-    for(let i = 0; i < numberOfSections; i++){
-        const currElement = sectionList[i];
-        if(isInViewport(currElement) && currElement.className !== "your-active-class"){
-            currElement.className = "your-active-class";
-            break;
+    window.addEventListener('scroll', function() {
+        for(let section of sectionList){
+            if(isInViewport(section) && section.classList.containes("your-active-class")){
+                section.className = "your-active-class";
+                break;
+            }
+            else
+                section.classList.remove('your-active-class');
         }
-        else
-            currElement.classList.remove('your-active-class');
-    }
+    });
 }
 
 function scrollTO(elementName){
@@ -58,19 +59,20 @@ function scrollTO(elementName){
  * 
 */
 function main() {
-    navbar.setAttribute('id', 'navbar__list');
+    window.addEventListener('load', function(){
+        navbar.setAttribute('id', 'navbar__list');
 
-    const navEle = document.querySelector('nav');
+        const navEle = document.querySelector('nav');
 
-    for(let i = 0; i < numberOfSections; i++){
-        const item = sectionList[i];
-        var listItem = document.createElement('li');
-        listItem.className = 'menu__link';
-        listItem.textContent = item.getAttribute('data-nav');
+        for(let section of sectionList){
+            var listItem = document.createElement('li');
+            listItem.className = 'menu__link';
+            listItem.textContent = section.getAttribute('data-nav');
 
-        navbar.appendChild(listItem);
-    }
-    navEle.appendChild(navbar);
+            navbar.appendChild(listItem);
+        }
+        navEle.appendChild(navbar);
+    });
 };
 
 // build the nav
@@ -89,9 +91,8 @@ function main() {
 */
 
 // Build menu 
-window.addEventListener('load', main);
+main();
 // Scroll to section on link click
 scrollTO();
 // Set sections as active
-
-window.addEventListener('scroll', findActiveElement);
+findActiveElement();
