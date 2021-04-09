@@ -26,7 +26,7 @@ const numberOfSections = sectionList.length;
  * Start Helper Functions
  * 
 */
-function isInViewport(element) {
+function isInViewport(element) { //checks if an element is close to the top of the page
     const rect = element.getBoundingClientRect();
     return (
         rect.top >= 0 &&
@@ -34,11 +34,11 @@ function isInViewport(element) {
     );
 }
 
-function findActiveElement(){
+function findActiveElement(){ //checks for the element closest to the top of the page
     window.addEventListener('scroll', function() {
         for(let section of sectionList){
             if(isInViewport(section)){
-                section.className = "your-active-class";
+                section.className = "your-active-class"; //sets class as active
                 break;
             }
             else
@@ -59,19 +59,19 @@ function scrollTO(elementName){
  * 
 */
 function main() {
-    window.addEventListener('load', function(){
-        navbar.setAttribute('id', 'navbar__list');
+    window.addEventListener('load', function(){ //wait for page to load
+        navbar.setAttribute('id', 'navbar__list'); //sets id
 
-        const navEle = document.querySelector('nav');
+        const navEle = document.querySelector('nav'); //gets the navbar element
 
         for(let section of sectionList){
-            var listItem = document.createElement('li');
+            var listItem = document.createElement('li'); 
             listItem.className = 'menu__link';
             listItem.textContent = section.getAttribute('data-nav');
 
-            navbar.appendChild(listItem);
+            navbar.appendChild(listItem); //adds the created list item to the navbar
         }
-        navEle.appendChild(navbar);
+        navEle.appendChild(navbar); //add the navbar to the html page
     });
 };
 
