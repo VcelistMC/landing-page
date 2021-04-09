@@ -50,7 +50,8 @@ function findActiveElement(){ //checks for the element closest to the top of the
 function scrollTO(elementName){
     navbar.addEventListener('click', function(event){
         const clickedItem = document.querySelector(`[data-nav = "${event.target.textContent}"]`);
-        clickedItem.scrollIntoView({behavior: "smooth"});
+        if(clickedItem !== null)
+            clickedItem.scrollIntoView({behavior: "smooth"});
     })
 }
 /**
