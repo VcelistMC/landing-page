@@ -37,7 +37,7 @@ function isInViewport(element) {
 function findActiveElement(){
     window.addEventListener('scroll', function() {
         for(let section of sectionList){
-            if(isInViewport(section) && section.classList.containes("your-active-class")){
+            if(isInViewport(section)){
                 section.className = "your-active-class";
                 break;
             }
